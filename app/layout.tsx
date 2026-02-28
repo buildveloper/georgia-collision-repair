@@ -12,6 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <meta name="fo-verify" content="3ad23b20-2ee1-47b1-80c5-1ca0afe0f077" />
+        <meta name="google-site-verification" content="WXJUxjQIQ0GIPaLe5zuYlz5jA1dyA696KxjuXoyiHAE" />
       </head>
 
       <body suppressHydrationWarning className="bg-zinc-50 text-zinc-900">
