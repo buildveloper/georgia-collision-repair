@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Georgia Collision Repair | Free Local Quotes",
-  description: "Fast free collision repair quotes in Georgia. Atlanta, Savannah, Augusta & more. Tell us once, trusted shops call you.",
+  title: "Collision Repair Georgia | Free Auto Body Repair Quotes in Atlanta & More",
+  description: "Get fast, free collision repair quotes in Georgia. Trusted auto body shops in Atlanta, Savannah, Augusta, Macon. No hassle – submit once for local car collision repair near me.",
   icons: { icon: "/logo.png" },
 };
 
