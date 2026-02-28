@@ -34,18 +34,18 @@ export default function Home() {
     <div>
       {/* Hero */}
       <div className="hero">
-        <img src="/mainhero.png" alt="Georgia Collision Repair" />
+        <img src="/mainhero.png" alt="Collision repair Georgia – Auto body shop near me in Atlanta GA"/>
         <div className="hero-overlay" />
         <div className="hero-content">
           <img src="/logo.png" alt="Georgia Collision Repair" className="logo" />
           <h1 style={{ fontSize: "48px", lineHeight: "1.1", marginBottom: "16px", fontWeight: "800" }}>
-            Collision Repair Quotes in Georgia
+            Collision Repair Georgia – Fast Free Quotes
           </h1>
           <p style={{ fontSize: "22px", marginBottom: "24px" }}>
-            Tell us once. Trusted local shops contact you fast.<br />100% Free • No spam • Georgia only
+            Trusted auto body repair in Georgia. Get quotes from local shops in Atlanta, Savannah, Augusta for car collision repair near me, dent repair, and auto paint.<br />100% Free • No spam • Georgia only
           </p>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.15)", padding: "12px 24px", borderRadius: "9999px", fontSize: "15px" }}>
-            ✅ Atlanta • Savannah • Augusta • Macon • All Georgia
+            ✅ Collision Repair Atlanta • Auto Body Shop Savannah GA • Dent Repair Augusta • All Georgia
           </div>
         </div>
       </div>
