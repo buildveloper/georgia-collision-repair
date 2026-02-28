@@ -28,21 +28,19 @@ export async function POST(request: Request) {
       }
     }
 
-    // Field names updated to match most common Airtable setups
-    await base("Leads").create([{
-      fields: {
-        "Name": name,
-        "Phone Number": phone,        // Changed from "Phone"
-        "Email": email,
-        "Zip Code": zip,
-        "Year": year ? parseInt(year) : null,
-        "Make": make,
-        "Model": model,
-        "Damage Description": description,
-        "Photos": photoUrls.map(url => ({ url })),
-        "Status": "New",
-      }
-    }]);
+    // Fixed: Type cast for Photos to resolve Attachment overload
+    await base("Leads").create({
+      "Name": name,
+      "Phone Number": phone,
+      "Email": email,
+      "Zip Code": zip,
+      "Year": year ? parseInt(year) : undefined,
+      "Make": make,
+      "Model": model,
+      "Damage Description": description,
+      "Photos": photoUrls.map(url => ({ url })) as any,  // TS fix for new attachments
+      "Status": "New",
+    });
 
     console.log("✅ Lead saved successfully to Airtable");
     return Response.json({ success: true });
