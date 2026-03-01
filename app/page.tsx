@@ -48,13 +48,6 @@ export default function Home() {
         <div className="hero-overlay" />
 
         <div className="hero-content">
-          {/* <img
-            src="/logo.png"
-            loading="lazy"
-            alt="Georgia Collision Repair logo – Collision repair Georgia and auto body shop Atlanta GA"
-            className="logo"
-          /> */}
-
           <h1
             style={{
               color: "#ffffff",
@@ -104,7 +97,7 @@ export default function Home() {
       </div>
 
       {/* Form */}
-      <div className="form-wrapper">
+      <div className="form-wrapper" style={{ paddingTop: "clamp(40px, 12vw, 120px)" }}>
         <div className="main-form">
           <form action={handleSubmit} className="space-y-6">
             <div className="form-group">
@@ -132,20 +125,14 @@ export default function Home() {
                 <label className="label">Vehicle Year *</label>
                 <select name="year" required className="input">
                   {Array.from({ length: 27 }, (_, i) => 2026 - i).map((y) => (
-                    <option key={y} value={y}>
-                      {y}
-                    </option>
+                    <option key={y} value={y}>{y}</option>
                   ))}
                 </select>
               </div>
               <div className="form-group">
                 <label className="label">Make *</label>
                 <select name="make" required className="input">
-                  {makes.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
+                  {makes.map((m) => <option key={m} value={m}>{m}</option>)}
                 </select>
               </div>
             </div>
@@ -190,7 +177,18 @@ export default function Home() {
           </form>
         </div>
 
-        <div className="trust-bar">
+        <div
+          className="trust-bar"
+          style={{
+            background: "#0a2540",
+            color: "white",
+            textAlign: "center",
+            padding: "clamp(16px, 5vw, 32px) 20px",
+            fontSize: "clamp(13px, 3.8vw, 15px)",
+            lineHeight: "1.5",
+            marginTop: "clamp(24px, 6vw, 48px)",
+          }}
+        >
           Trusted by Georgia drivers • Your info stays private • Leads go straight to real shops
         </div>
       </div>
