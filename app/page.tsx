@@ -37,7 +37,7 @@ export default function Home() {
         <img src="/mainhero.png" loading="lazy" alt="Collision repair Georgia – Auto body shop near me in Atlanta GA"/>
         <div className="hero-overlay" />
         <div className="hero-content">
-         <img src="/logo.png" loading="lazy" alt="Georgia Collision Repair logo – Collision repair Georgia and auto body shop Atlanta GA" className="logo" />
+         {/* <img src="/logo.png" loading="lazy" alt="Georgia Collision Repair logo – Collision repair Georgia and auto body shop Atlanta GA" className="logo" /> */}
           <h1 style={{ fontSize: "48px", lineHeight: "1.1", marginBottom: "16px", fontWeight: "800" }}>
             Collision Repair Georgia – Fast Free Quotes
           </h1>
