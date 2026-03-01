@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const photoFiles = formData.getAll("photos") as File[];
     const photoAttachments: any[] = [];
 
-    // Upload photos to Vercel Blob and build proper Airtable attachment objects
+    // Upload photos and build correct Airtable attachment format
     for (const file of photoFiles) {
       if (file.size > 0 && file.type.startsWith("image/")) {
         try {
@@ -29,8 +29,6 @@ export async function POST(request: Request) {
           photoAttachments.push({
             url: blob.url,
             filename: file.name || `damage-photo-${Date.now()}.jpg`,
-            size: file.size,
-            type: file.type,
           });
           
           console.log(`✅ Photo uploaded: ${file.name}`);
@@ -40,7 +38,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // Create the lead in Airtable
+    // Create lead in Airtable
     await base("Leads").create([{
       fields: {
         "Name": name,
@@ -56,7 +54,7 @@ export async function POST(request: Request) {
       }
     }]);
 
-    console.log(`✅ Lead saved successfully with ${photoAttachments.length} photo(s)`);
+    console.log(`✅ Lead saved with ${photoAttachments.length} photo(s)`);
     return Response.json({ success: true });
 
   } catch (error: any) {
