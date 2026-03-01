@@ -20,25 +20,20 @@ export async function POST(request: Request) {
     const photoFiles = formData.getAll("photos") as File[];
     const photoAttachments: any[] = [];
 
-    // Upload photos and build correct Airtable attachment format
     for (const file of photoFiles) {
       if (file.size > 0 && file.type.startsWith("image/")) {
         try {
           const blob = await put(file.name, file, { access: "public" });
-          
           photoAttachments.push({
             url: blob.url,
-            filename: file.name || `damage-photo-${Date.now()}.jpg`,
+            filename: file.name || `damage-${Date.now()}.jpg`,
           });
-          
-          console.log(`✅ Photo uploaded: ${file.name}`);
-        } catch (uploadError) {
-          console.error("❌ Photo upload failed (continuing):", uploadError);
+        } catch (e) {
+          console.error("Photo upload failed:", e);
         }
       }
     }
 
-    // Create lead in Airtable
     await base("Leads").create([{
       fields: {
         "Name": name,
@@ -54,14 +49,9 @@ export async function POST(request: Request) {
       }
     }]);
 
-    console.log(`✅ Lead saved with ${photoAttachments.length} photo(s)`);
     return Response.json({ success: true });
-
   } catch (error: any) {
-    console.error("❌ Lead submission error:", error.message);
-    return Response.json({ 
-      success: false, 
-      error: error.message 
-    }, { status: 500 });
+    console.error("Error:", error.message);
+    return Response.json({ success: false, error: error.message }, { status: 500 });
   }
 }
