@@ -11,8 +11,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
         <meta name="fo-verify" content="3ad23b20-2ee1-47b1-80c5-1ca0afe0f077" />
         <meta name="google-site-verification" content="WXJUxjQIQ0GIPaLe5zuYlz5jA1dyA696KxjuXoyiHAE" />
+        <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Georgia Collision Repair",
+          "url": "https://georgiacollisionrepair.com",
+          "description": "Free collision repair quotes in Georgia. Trusted auto body shops in Atlanta, Savannah, Augusta.",
+          "address": { "@type": "PostalAddress", "addressRegion": "GA", "addressCountry": "US" },
+          "service": { "@type": "Service", "serviceType": "Collision Repair, Auto Body Repair" }
+        })}
+      </script>
       </head>
 
       <body suppressHydrationWarning className="bg-zinc-50 text-zinc-900">
