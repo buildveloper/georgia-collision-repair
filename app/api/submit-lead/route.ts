@@ -18,21 +18,29 @@ export async function POST(request: Request) {
     const description = formData.get("description") as string;
 
     const photoFiles = formData.getAll("photos") as File[];
-    let photoUrls: string[] = [];
+    const photoAttachments: any[] = [];
 
-    // Upload photos (continue even if one fails)
+    // Upload photos to Vercel Blob and build proper Airtable attachment objects
     for (const file of photoFiles) {
       if (file.size > 0 && file.type.startsWith("image/")) {
         try {
           const blob = await put(file.name, file, { access: "public" });
-          photoUrls.push(blob.url);
-        } catch (uploadErr) {
-          console.error("Photo upload failed (continuing):", uploadErr);
+          
+          photoAttachments.push({
+            url: blob.url,
+            filename: file.name || `damage-photo-${Date.now()}.jpg`,
+            size: file.size,
+            type: file.type,
+          });
+          
+          console.log(`✅ Photo uploaded: ${file.name}`);
+        } catch (uploadError) {
+          console.error("❌ Photo upload failed (continuing):", uploadError);
         }
       }
     }
 
-    // This format + "as any" fixes the TypeScript error
+    // Create the lead in Airtable
     await base("Leads").create([{
       fields: {
         "Name": name,
@@ -43,14 +51,16 @@ export async function POST(request: Request) {
         "Make": make,
         "Model": model,
         "Damage Description": description,
-        "Photos": photoUrls.map(url => ({ url })) as any,
+        "Photos": photoAttachments,
         "Status": "New",
       }
     }]);
 
+    console.log(`✅ Lead saved successfully with ${photoAttachments.length} photo(s)`);
     return Response.json({ success: true });
+
   } catch (error: any) {
-    console.error("Lead submission error:", error.message);
+    console.error("❌ Lead submission error:", error.message);
     return Response.json({ 
       success: false, 
       error: error.message 
