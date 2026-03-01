@@ -18,34 +18,39 @@ export async function POST(request: Request) {
     const description = formData.get("description") as string;
 
     const photoFiles = formData.getAll("photos") as File[];
-
     let photoUrls: string[] = [];
 
+    // Upload photos (continue even if one fails)
     for (const file of photoFiles) {
       if (file.size > 0 && file.type.startsWith("image/")) {
-        const blob = await put(file.name, file, { access: "public" });
-        photoUrls.push(blob.url);
+        try {
+          const blob = await put(file.name, file, { access: "public" });
+          photoUrls.push(blob.url);
+        } catch (uploadErr) {
+          console.error("Photo upload failed (continuing):", uploadErr);
+        }
       }
     }
 
-    // Fixed: Type cast for Photos to resolve Attachment overload
-    await base("Leads").create({
-      "Name": name,
-      "Phone Number": phone,
-      "Email": email,
-      "Zip Code": zip,
-      "Year": year ? parseInt(year) : undefined,
-      "Make": make,
-      "Model": model,
-      "Damage Description": description,
-      "Photos": photoUrls.map(url => ({ url })) as any,  // TS fix for new attachments
-      "Status": "New",
-    });
+    // This format + "as any" fixes the TypeScript error
+    await base("Leads").create([{
+      fields: {
+        "Name": name,
+        "Phone Number": phone,
+        "Email": email,
+        "Zip Code": zip,
+        "Year": year ? parseInt(year) : undefined,
+        "Make": make,
+        "Model": model,
+        "Damage Description": description,
+        "Photos": photoUrls.map(url => ({ url })) as any,
+        "Status": "New",
+      }
+    }]);
 
-    console.log("✅ Lead saved successfully to Airtable");
     return Response.json({ success: true });
   } catch (error: any) {
-    console.error("❌ Airtable Error:", error.message);
+    console.error("Lead submission error:", error.message);
     return Response.json({ 
       success: false, 
       error: error.message 
