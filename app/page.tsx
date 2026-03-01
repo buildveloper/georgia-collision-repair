@@ -9,26 +9,28 @@ export default function Home() {
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (formData: FormData) => {
-    setIsSubmitting(true);
-    setMessage("");
+  setIsSubmitting(true);
+  setMessage("");
 
-    try {
-      const res = await fetch("/api/submit-lead", {
-        method: "POST",
-        body: formData,
-      });
+  try {
+    const res = await fetch("/api/submit-lead", {
+      method: "POST",
+      body: formData,
+    });
 
-      if (res.ok) {
-        window.location.href = "/thank-you";
-      } else {
-        setMessage("Something went wrong. Please try again.");
-      }
-    } catch {
-      setMessage("Network error. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    const data = await res.json();
+
+    if (res.ok) {
+      window.location.href = "/thank-you";
+    } else {
+      setMessage(data.error || "Something went wrong. Please try again.");
     }
-  };
+  } catch (err: any) {
+    setMessage("Network error: " + (err.message || "Please try again."));
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div>
